@@ -1,45 +1,54 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="EUC-KR"%>
-    
-<%-- JSTL Core ¶óÀÌºê·¯¸® Ãß°¡ --%>    
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
-    
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%-- JSTL Core ë¼ì´ë¸ŒëŸ¬ë¦¬ ì¶”ê°€ --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+  
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ÀüÃ¼ ºÎ¼­ Á¶È¸</title>
+	<title>ì „ì²´ ë¶€ì„œ ì¡°íšŒ</title>
 </head>
 <body>
 
-	<h1>ÀüÃ¼ ºÎ¼­ Á¶È¸</h1>
-	
+	<h1>ì „ì œ ë¶€ì„œ ì¡°íšŒ</h1>
+
+
 	<table border="1">
 	
 		<thead>
 			<tr>
-				<th>Çà ¹øÈ£</th>
-				<th>ºÎ¼­ ÄÚµå(DEPT_ID)</th>
-				<th>ºÎ¼­ ¸í(DEPT_TITLE)</th>
-				<th>Áö¿ª ÄÚµå(LOCATION_ID)</th>
+				<th>í–‰ ë²ˆí˜¸</th>
+				<th>ë¶€ì„œ ì½”ë“œ (DEPT_ID)</th>
+				<th>ë¶€ì„œ ëª…   (DEPT_TITLE)</th>
+				<th>ì§€ì—­ ì½”ë“œ (LOCATION_ID)</th>
 			</tr>
 		</thead>
 		
-		<tbody>
 		
+		<tbody>
 			<c:forEach items="${deptList}" var="dept" varStatus="vs">
+				
 				<tr>
-					<%-- vs.count : ÇöÀç ¹Ýº¹ È½¼ö (1ºÎÅÍ ½ÃÀÛ) --%>
+					<%-- vs.count : í˜„ìž¬ ë°˜ë³µ íšŸìˆ˜ (1ë¶€í„° ì‹œìž‘) --%>
 					<td>${vs.count}</td>
+					
 					<td>${dept.deptId}</td>
+					
 					<td>${dept.deptTitle}</td>
+					
 					<td>${dept.locationId}</td>
 				</tr>
+			
 			</c:forEach>
-		
 		</tbody>
 	
+	
 	</table>
+
+
+
+
 
 </body>
 </html>
