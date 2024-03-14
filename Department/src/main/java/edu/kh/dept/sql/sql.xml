@@ -40,9 +40,9 @@
 	</entry>
 	
 	<entry key="searchDepartment">
-		SELECT DEPT_TITLE
-		WHERE DEPT_TITLE LIKE %?%
+		SELECT *
 		FROM DEPARTMENT4
+		WHERE DEPT_TITLE LIKE '%'|| ? ||'%'
 	</entry>
 	
 

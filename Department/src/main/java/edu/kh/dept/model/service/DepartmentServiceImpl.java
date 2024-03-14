@@ -209,7 +209,17 @@ public class DepartmentServiceImpl implements DepartmentService{
 
 	}//updateDepartment
 	
-	
+	@Override
+	public List<Department> searchDepartment(String keyword) throws SQLException {
+		
+		Connection conn = getConnection();
+		
+		List<Department> deptList = dao.searchDepartment(conn,keyword);
+		
+		close(conn);
+		
+		return deptList;
+	}//searchDepartment
 
 	
 	

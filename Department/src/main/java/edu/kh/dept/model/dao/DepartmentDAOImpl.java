@@ -230,7 +230,41 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 	}//updateDepartment
 	
 	
+	@Override
+	public List<Department> searchDepartment(Connection conn, String keyword) throws SQLException {
+		
+		List<Department> deptList = new ArrayList<Department>();
+		
+		try {
+			
+			String sql =prop.getProperty("searchDepartment");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				String deptId = rs.getString("DEPT_ID");
+				String deptTITLE = rs.getString("DEPT_TITLE");
+				String locationId = rs.getString("LOCATION_ID");
+				
+				Department dept = new Department(deptId, deptTITLE, locationId);
+				
+				deptList.add(dept);
+				
+			}
+			
+			
+		}finally {
+			
+			close(rs);
+			close(pstmt);
+			
+		}
 
+		return deptList;
+	}//searchDepartment
 	
 	
 

@@ -51,6 +51,9 @@ public interface DepartmentDAO {
 	int updateDepartment(Department dept, Connection conn)  throws SQLException;
 
 
+	List<Department> searchDepartment(Connection conn, String keyword) throws SQLException;
+
+
 	
 
 

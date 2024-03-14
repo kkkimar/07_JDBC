@@ -11,7 +11,6 @@
 
 	<h1>전제 부서 조회</h1>
 
-
 	<table border="1">
 	
 		<thead>

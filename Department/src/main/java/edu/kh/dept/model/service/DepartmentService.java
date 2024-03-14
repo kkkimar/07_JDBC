@@ -62,6 +62,10 @@ public interface DepartmentService {
 
 
 
+	List<Department> searchDepartment(String keyword) throws SQLException;
+
+
+
 	
 	
 	
