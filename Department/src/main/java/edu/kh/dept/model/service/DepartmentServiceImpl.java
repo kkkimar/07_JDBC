@@ -92,5 +92,126 @@ public class DepartmentServiceImpl implements DepartmentService{
 	}
 	
 	
+	//여러 부서 추가하기
+	@Override
+	public int multiInsert(List<Department> deptList) throws DepartmentInsertException {
+		
+		// 1. connection 얻어오기 -> 트랜잭션 제어하기 위해서 필요!
+		Connection conn = getConnection();
+		
+		int result = 0; //삽입된 행의 개수 누적
+		String currentDeptId = null; // 현재 삽입하려는 부서코드를 저장하는 변수
+		
+		
+		try {
+			// 2. 전달 받은 deptList 길이만큼 반복하며
+			// DB에 insert하는 DAO메서드 호출
+			
+			for(Department dept : deptList) {
+				
+				currentDeptId = dept.getDeptId(); // 삽입할 getDeptId를 변수에 저장
+				result += dao.insertDepartment(conn, dept); // 예외가 발생하면 catch문으로 감
+				
+			}
+			
+			// 3. 트랜잭션 제어 처리
+			// result에 누적된 값(== 삽입 성공한 행의 개수)과
+			// deptList의 길이가 같은 경우
+			// == 모두 삽입 성공한 경우 -> commit
+			
+			// result != deptList의 길이
+			// == 삽입 실패한 경우 존재 -> rollback
+			
+			if(result == deptList.size()) commit(conn);
+			else rollback(conn);
+			
+		}catch(SQLException e) {
+		
+			// 4. SQL 수행 중 오류 발생 시
+			// ( pk,not null 제약조건 위배, 데이터 크기 초과, DB 연결 종료 )
+			
+			e.printStackTrace();
+			
+			rollback(conn); // SQL이 하나라도 실패하면 전체 rollback
+			
+			// 예외가 발생이 되었음을 Controller(Servlet)에 전달 하기
+			// -> 사용자 정의 예외 강제 발생
+			
+			// (pk 제약조건 위배만 생각)
+			throw new DepartmentInsertException( currentDeptId+"부서코드가 이미 존재합니다"); // 예외를 던질때 객체를 만들어서 던져야함
+			
+		} finally {
+			
+			// 5. 사용 완료된 커넥션 반환
+			close(conn);
+			
+		}
+		
+		// 6. 결과 반환
+		return result;
+		
+	}//multiInsert
+	
+	
+	
+	// 부서 삭제하기
+	@Override
+	public int deleteDept(String deptId) throws SQLException {
+		
+		Connection conn = getConnection();
+		
+		int result = dao.deleteDept(conn, deptId);
+		
+		if(result > 0)	commit(conn);
+		else						rollback(conn);
+		
+		close(conn);
+		
+		return result;
+
+	}//deleteDept
+	
+	
+	// 부서 1행 조회
+	@Override
+	public Department selectOne(String deptId) throws SQLException  {
+		
+		//1. 커넥션 얻어오기
+		
+		Connection conn = getConnection();
+		
+		//2. DAO 메서드 호출 후 결과 반환 받기
+		Department dept = dao.selectOne(conn,deptId);
+		
+		//3. 커넥션 반환
+		close(conn);
+		
+		
+		return dept;
+	}//selectOne
+	
+	
+	// 부서 수정
+	@Override
+	public int updateDepartment(Department dept) throws SQLException {
+		
+		Connection conn = getConnection();
+		
+			
+		int result = dao.updateDepartment(dept,conn);
+			
+	  if(result >0) commit(conn);
+		else rollback(conn);
+			
+		
+		close(conn);
+		return result;
+
+	}//updateDepartment
+	
+	
+
+	
+	
 
 }

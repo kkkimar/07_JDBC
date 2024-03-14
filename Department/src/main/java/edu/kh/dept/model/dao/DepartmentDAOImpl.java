@@ -132,5 +132,106 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 	}
 	
 	
+	//부서 삭제
+	@Override
+	public int deleteDept(Connection conn, String deptId) throws SQLException {
+		
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("deleteDepartment");
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, deptId);
+			
+			result = pstmt.executeUpdate(); // DML 수행
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}//deleteDept
+	
+	
+	
+	@Override
+	public Department selectOne(Connection conn, String deptId) throws SQLException {
+
+		// 결과 저장용 변수 선언
+		Department dept = null;
+		
+		try {
+			
+			//SQL 얻어오기
+			String sql = prop.getProperty("selectOne");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, deptId);
+			
+			//SQL 실행후 결과 resultset 반환 받기
+			
+			rs = pstmt.executeQuery();
+			
+			//PK를 조건으로 삼은 SELECT 문은
+			//조회 성공시 1행만 조회됨! -> while 대신 if문으로 1회만 접근 (if문이 좀 더 빠르기때문)
+			
+			if(rs.next()) {
+				
+				dept = new Department(
+							rs.getString("DEPT_ID"),
+							rs.getString("DEPT_TITLE"),
+							rs.getString("LOCATION_ID")
+						);
+				
+			}
+			
+		}finally {
+			//사용한 JDBC 객체 자원 반환 (커넥션 제외)
+			close(rs);
+			close(pstmt);
+		}
+		
+		return dept; // 조회 실패시 null, 성공시 null 아님
+		
+		
+	}//selectOne
+	
+	@Override
+	public int updateDepartment(Department dept,Connection conn) throws SQLException {
+		
+		int resulte = 0;
+		
+		try {
+			
+			
+			String sql = prop.getProperty("updateDepartment");
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, dept.getDeptTitle());
+			pstmt.setString(2, dept.getLocationId());
+			pstmt.setString(3, dept.getDeptId());
+			
+			resulte = pstmt.executeUpdate();
+			
+
+			
+		}finally { //JDBC 객체 자원 무조건 반환 하려고 finally 구문 사용
+			
+			close(rs);
+			close(pstmt);
+			
+		}
+		
+		return resulte;
+		
+	}//updateDepartment
+	
+	
+
+	
+	
 
 }
