@@ -209,6 +209,7 @@ public class DepartmentServiceImpl implements DepartmentService{
 
 	}//updateDepartment
 	
+	//부서명검색
 	@Override
 	public List<Department> searchDepartment(String keyword) throws SQLException {
 		

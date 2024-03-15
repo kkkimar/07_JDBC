@@ -26,8 +26,10 @@ public class SearchServlet extends HttpServlet{
 
 			DepartmentService service = new DepartmentServiceImpl();
 			
+			//여러행 조회 -> List
 			List<Department> deptList = service.searchDepartment(keyword);
 			
+			// 조회 결과를 request scope에 속성으로 세팅
 			req.setAttribute("deptList", deptList);
 			
 			String message = null;

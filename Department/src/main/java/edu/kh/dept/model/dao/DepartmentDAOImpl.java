@@ -230,6 +230,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 	}//updateDepartment
 	
 	
+	//부서명 검색
 	@Override
 	public List<Department> searchDepartment(Connection conn, String keyword) throws SQLException {
 		
@@ -243,9 +244,13 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 			
 			rs = pstmt.executeQuery();
 			
+			//조회 결과 한행씩 접근해 컬럼값 얻어오기
+			//조회 결과 가 없으면 deptList 비어있는 상태로 반환
+			// -> while문 실행 안됨
 			while(rs.next()) {
 				
 				String deptId = rs.getString("DEPT_ID");
+				//String deptId = rs.getString(1); -- 1번 컬럼 값 
 				String deptTITLE = rs.getString("DEPT_TITLE");
 				String locationId = rs.getString("LOCATION_ID");
 				
@@ -256,7 +261,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 			}
 			
 			
-		}finally {
+		}finally { //예외가 발생하든 말든 무조건 실행되는 구문
 			
 			close(rs);
 			close(pstmt);
