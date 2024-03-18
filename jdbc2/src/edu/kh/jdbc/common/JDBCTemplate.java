@@ -24,6 +24,7 @@ public class JDBCTemplate {
 	 * 
 	 * * 어디서든지 별도의 객체 생성없이 사용할 수 있게
 	 *   모든 메서드는 public static으로 생성
+	 *   -> 객체 생성 없이 클래스명.메서드명 하면 사용 가능
 	 * 
 	 * */
 	
@@ -31,7 +32,9 @@ public class JDBCTemplate {
 	// 필드
 	private static Connection conn = null;
 	// -> 필드는 왜 static ??
-	//    static 메서드가 참조 가능한 필드는 static 필드밖에 없기 때문에
+	// -> 필드에 static을 안쓰면 public static Connection getConnection() 메소드가 먼저 해석됨
+	// -> 해석 순서의 오류때문에 필드에도 static을 써줌 
+	//    static 메서드가 참조 가능한 필드는 static 필드밖에 없기 때문에(static 끼리만 참조 가능)
 	
 	// 메서드
 	
@@ -109,7 +112,7 @@ public class JDBCTemplate {
 	
 	//---------------------------------------------------------------------------------------------------------
 	
-	/*JDBC 객체 자원 반환 (close)*/
+	/*JDBC 객체 자원 반환 (close) + 오버로딩*/
 	
 	public static void close(Connection conn) {
 		
@@ -124,6 +127,7 @@ public class JDBCTemplate {
 	public static void close(Statement stmt) {
 		
 		// Statement, PreparedStatement 두 객체 close 처리하는 메서드
+		// PreparedStatement가 Statement를 상속했기 때문에 매개변수로 PreparedStatement도 가능
 		
 		try {
 			if(stmt != null && !stmt.isClosed()) stmt.close();
@@ -134,8 +138,6 @@ public class JDBCTemplate {
 	}
 	
 	public static void close(ResultSet rs) {
-		
-		// Statement, PreparedStatement 두 객체 close 처리하는 메서드
 		
 		try {
 			if(rs != null && !rs.isClosed()) rs.close();

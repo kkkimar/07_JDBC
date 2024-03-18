@@ -41,7 +41,7 @@ public class JDBCRun1 {
 			pstmt.setString(2, deptCode);
 			
 			/*6. SQL 실행 후 결과 반환 받기*/
-			int result = pstmt.executeUpdate(); // 수정된 행의 개수가 반환
+			int result = pstmt.executeUpdate(); // DML은 수정된 행의 개수가 반환
 			
 			/*7. SQL 수행 결과에 따라 트랜잭션 제어*/
 			if(result > 0) {
