@@ -11,7 +11,7 @@ import edu.kh.jdbc.model.dto.Department;
 public class DepartmentView {
 
 	// 객체의 필드는 초기화 되지 않은 경우 
-	// 생성 시 기본값으로 자동 초기화됨
+	// 생성 시 기본값(null)으로 자동 초기화됨
 	private Scanner sc; 
 	private DepartmentDAO dao;
 	
