@@ -35,9 +35,9 @@ public class BookSearchServelt extends HttpServlet{
 			req.setAttribute("bookList", bookList);
 			
 			if(bookList.isEmpty()) {//조회 실패
-				message = "검색하식 도서가 없습니다";
+				message = "도서 목록에 해당 검색어가 없습니다";
 			}else {
-				message = "도서 목록 검색 조회";
+				message = "도서 목록 조회 성공";
 			}
 			
 			session.setAttribute("message", message);

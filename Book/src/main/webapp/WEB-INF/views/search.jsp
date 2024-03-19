@@ -28,7 +28,7 @@
       </c:forEach>
     </tbody>
   
-    <button id="gotoMain">목록으로</button>
+    <button id="home">메인으로</button>
   </table>
 
 

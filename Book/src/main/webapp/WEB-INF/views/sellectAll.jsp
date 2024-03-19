@@ -13,7 +13,7 @@
 
   <table border ="1" style="border-collapse: collapse;">
     <thead>
-      <th>책 번호</th>
+      <th>도서 번호</th>
       <th>책 제목</th>
       <th>예약 가능</th>
     </thead>
@@ -31,6 +31,8 @@
    
     </tbody>
   </table>
+  <button id="home">메인으로</button>
 
+  <script src="/resources/js/bookList.js"></script>
 </body>
 </html>

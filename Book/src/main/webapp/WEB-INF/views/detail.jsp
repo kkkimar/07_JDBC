@@ -17,7 +17,7 @@
     </tr>
 
     <tr>
-      <th>예약 가능(Y/N)</th>
+      <th>예약하기</th>
       <td>
         <%-- data-* 속성
           - 데이터에 대한 확장성을 고려하여 설계된 속성
@@ -38,8 +38,7 @@
     </tr>
   </table>
 
-  <button id="gotoMain">목록조회</button>
-
+  <button id="gotoList">목록조회</button>
 
   <script src="/resources/js/bookList.js"></script>
 </body>
